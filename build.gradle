@@ -1,0 +1,45 @@
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'eclipse-wtp'
+
+repositories {
+    // Use 'jcenter' for resolving your dependencies.
+    jcenter()
+}
+
+// JDK version source compatibility
+// sourceCompatibility = 1.7
+
+// War file name
+war.baseName = 'CSS'
+
+// Web directory, this overrides the default value "webapp"
+project.webAppDirName = 'WebContent'
+
+// Set source directory
+sourceSets {
+        main {
+            java {
+                srcDir 'src'
+            }
+            resources {
+                srcDir 'resources'
+            }
+        }
+}
+
+
+processResources {
+    include "**/log4j.properties"
+    include "**/epics-react.properties"
+}
+
+dependencies {
+    providedCompile 'javax.websocket:javax.websocket-api:1.1'
+    providedCompile 'org.apache.tomcat:tomcat-catalina:8.0.30'
+
+    compile files(fileTree(dir: 'WebContent/WEB-INF/lib', includes: ['*.jar']))
+
+    compile 'javax.servlet:jstl:1.2'
+}
+
